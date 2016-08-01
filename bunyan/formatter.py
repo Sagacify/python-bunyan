@@ -16,6 +16,7 @@ from inspect import istraceback
 try:
   from collections import OrderedDict
 except ImportError:
+  OrderedDict = dict
   pass
 
 def object_startswith(key, value):
@@ -149,10 +150,7 @@ class BunyanFormatter(logging.Formatter):
     if record.exc_info and not message_dict.get('exc_info'):
       message_dict['exc_info'] = self.formatException(record.exc_info)
 
-    try:
-      log_record = OrderedDict()
-    except NameError:
-      log_record = {}
+    log_record = OrderedDict()
 
     self.add_fields(log_record, record, message_dict)
     log_record = self.process_log_record(log_record)
