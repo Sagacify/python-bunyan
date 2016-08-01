@@ -138,7 +138,12 @@ class BunyanFormatter(logging.Formatter):
 
     if isinstance(record.msg, dict):
       message_dict = record.msg
-      record.message = None
+      if len(record.args) == 1 and isinstance(record.args[0], str):
+        # bunyan style log method: fields object + msg string
+        record.msg = record.args[0]
+        record.message = record.args[0] % message_dict
+      else:
+        record.message = None
     else:
       record.message = record.getMessage()
     # only format time if needed
