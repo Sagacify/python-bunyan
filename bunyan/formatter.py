@@ -4,7 +4,7 @@ Bunyan Formatter.
 Provides logging compatibility with Bunyan standard and enceforth CLI.
 """
 import datetime
-import json
+import simplejson as json
 import logging
 import re
 import socket
@@ -128,7 +128,7 @@ class BunyanFormatter(logging.Formatter):
     """
     Returns a json string of the log record.
     """
-    return json.dumps(log_record, default = self.json_default)
+    return json.dumps(log_record, default = self.json_default, ignore_nan=True)
 
   def format(self, record):
     """
